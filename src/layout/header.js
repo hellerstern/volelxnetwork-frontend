@@ -6,7 +6,7 @@ import { PUBLIC_ROUTES } from "../config/routes";
 import { AppContext } from "../context/appcontext";
 
 // Images
-import { ImgLogo } from "../assets/images";
+import { X_LETTER_VOXEL_1, X_LETTER_VOXEL_2 } from "../assets/images";
 
 const Header = () => {
   const [moFlag, setMoFlag] = useState(false);
@@ -16,7 +16,7 @@ const Header = () => {
     <HeaderWrapper>
       <HeaderContainer>
         <Link to="/">
-          <img src={ImgLogo} alt="logo"></img>
+          <img src={X_LETTER_VOXEL_1} alt="logo"></img>
         </Link>
 
         <MainHeader>
@@ -33,9 +33,7 @@ const Header = () => {
                   key={index}
                 >
                   {PUBLIC_ROUTES[item].title}
-                  <svg width={"20"} height={"20"}>
-                    <react width={"20"} height={"20"} style={{ fill: "red" }} />
-                  </svg>
+                  <img alt="north_east" />
                 </NavLink>
               )
             )}
@@ -45,27 +43,27 @@ const Header = () => {
             <ToggleModeBtn
               onClick={() => AppData.setModeFlag(!AppData.modeFlag)}
             >
-              <svg width={"24"} height="24"></svg>
+              <img alt="toggleMode"></img>
             </ToggleModeBtn>
             <BuyVXLBtn to="#">
               Buy $VXL
-              <svg width={"24"} height="24"></svg>
+              <img alt={"NORTH_EAST_LIGHT_24"}></img>
             </BuyVXLBtn>
           </HeaderRadioButtons>
         </MainHeader>
       </HeaderContainer>
-      <MobileHeaderContainer>
-        <svg
-          width={"24"}
-          height={"24"}
+      <MobileHeaderContainer flag={moFlag}>
+        <img
+          alt={"toggleMode"}
+          className="toggle-mode"
           onClick={() => AppData.setModeFlag(!AppData.modeFlag)}
-        ></svg>
-        <svg width={"41"} height={"48"}></svg>
-        <svg
-          width={"24"}
-          height={"24"}
+        ></img>
+        <img src={X_LETTER_VOXEL_2}></img>
+        <img
+          alt={"menuIcon"}
+          className="menu-icon"
           onClick={() => setMoFlag(!moFlag)}
-        ></svg>
+        ></img>
       </MobileHeaderContainer>
 
       <MobileMainHeader flag={moFlag}>
@@ -82,15 +80,13 @@ const Header = () => {
                 key={index}
               >
                 {PUBLIC_ROUTES[item].title}
-                <svg width={"20"} height={"20"}>
-                  <react width={"20"} height={"20"} style={{ fill: "red" }} />
-                </svg>
+                <img alt={"outDirectIcon_20"}></img>
               </NavLink>
             )
           )}
           <MobileBuyVXLBtn to={"#"}>
             Buy $VXL
-            <svg width={"24"} height={"24"}></svg>
+            <img alt={"outDirectIcon_24"} />
           </MobileBuyVXLBtn>
         </MobilePageLinks>
       </MobileMainHeader>
@@ -102,6 +98,8 @@ const HeaderWrapper = styled.div`
   background-color: ${(p) => p.theme.bgColor1};
   position: relative;
   z-index: 2;
+  position: sticky;
+  top: 0;
 `;
 
 const HeaderContainer = styled.div`
@@ -151,6 +149,10 @@ const PageLinks = styled.div`
     justify-content: center;
     align-items: center;
     gap: 8px;
+
+    img {
+      content: url(${(p) => p.theme.outDirectIcon_20});
+    }
   }
 `;
 
@@ -166,6 +168,10 @@ const ToggleModeBtn = styled.button`
   border-radius: 24px;
   border: 1px solid ${(p) => p.theme.borderColor1};
   background-color: transparent;
+
+  img {
+    content: url(${(p) => p.theme.toggleMode});
+  }
 `;
 
 const BuyVXLBtn = styled(Link)`
@@ -185,7 +191,11 @@ const BuyVXLBtn = styled(Link)`
   font-style: normal;
   font-weight: 600;
   line-height: 24px; /* 150% */
-  color: ${(p) => p.theme.fontColor1};
+  color: #fff;
+
+  img {
+    content: url(${(p) => p.theme.NORTH_EAST_LIGHT_24});
+  }
 `;
 
 const MobileBuyVXLBtn = styled(Link)`
@@ -195,7 +205,7 @@ const MobileBuyVXLBtn = styled(Link)`
   background: #907acc;
   text-align: center;
 
-  color: #fff;
+  color: #fff !important;
   font-family: Manrope;
   font-size: 16px;
   font-style: normal;
@@ -208,6 +218,10 @@ const MobileBuyVXLBtn = styled(Link)`
   align-items: center;
   justify-content: center;
   gap: 8px;
+
+  img {
+    content: url(${(p) => p.theme.NORTH_EAST_LIGHT_24});
+  }
 `;
 
 const MobileHeaderContainer = styled.div`
@@ -222,6 +236,20 @@ const MobileHeaderContainer = styled.div`
 
   svg {
     background-color: red;
+  }
+
+  .toggle-mode {
+    content: url(${(p) => p.theme.toggleMode});
+  }
+  .menu-icon {
+    ${(p) =>
+      !p.flag
+        ? css`
+            content: url(${(p) => p.theme.menuIcon_24});
+          `
+        : css`
+            content: url(${(p) => p.theme.removeIcon_24});
+          `}
   }
 `;
 
@@ -249,13 +277,13 @@ const MobilePageLinks = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  background-color: ${(p) => p.theme.bgColor1};
+  /* background-color: ${(p) => p.theme.bgColor1}; */
   gap: 24px;
   padding: 36px 32px;
 
   border-radius: 0px 0px 40px 40px;
   border-bottom: 1px solid rgba(234, 234, 255, 0.08);
-  background: rgba(44, 45, 48, 0.48);
+  background: ${(p) => p.theme.opacitiedBgColor2};
   backdrop-filter: blur(16px);
 
   a {
@@ -274,6 +302,9 @@ const MobilePageLinks = styled.div`
     justify-content: center;
     align-items: center;
     gap: 8px;
+    img {
+      content: url(${(p) => p.theme.outDirectIcon_20});
+    }
   }
 `;
 
