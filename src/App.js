@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import { PUBLIC_ROUTES } from "./config/routes";
 
+import "swiper/css";
 import "./App.css";
 
 //Contexts
@@ -28,7 +29,7 @@ function App() {
               </Routes>
             </Layout>
           </ThemeContext>
-        </AppContextLayout  >
+        </AppContextLayout>
       </Router>
     </Suspense>
   );

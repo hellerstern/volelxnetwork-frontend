@@ -130,7 +130,7 @@ const PageLinks = styled.div`
   justify-content: center;
   align-items: center;
   gap: 48px;
-  @media screen and (max-width: 1500px) {
+  @media screen and (max-width: 1200px) {
     gap: 20px;
   }
   a {
@@ -266,7 +266,9 @@ const MobileMainHeader = styled.div`
 
   width: 100%;
   height: calc(100vh - 80px);
-  background-color: ${(p) => p.theme.opacitiedBgColor1};
+  @media screen and (max-width: 1000px) {
+    background-color: ${(p) => p.theme.opacitiedBgColor1};
+  }
   z-index: -1;
 
   transition: bottom 0.3s;
